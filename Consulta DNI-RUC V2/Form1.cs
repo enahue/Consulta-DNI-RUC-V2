@@ -1,8 +1,16 @@
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using System.Data.SQLite;
+using System.Linq;
+using System.Text.RegularExpressions;
+
 namespace Consulta_DNI_RUC_V2
 {
     public partial class Form1 : Form
     {
-        ConsultaApi epic = new ConsultaApi();
+        ConsultaApi consulta = new ConsultaApi();
+        private string databaseFile = String.Format("Data Source={0}", @"database.db");
+        string token = "";
         public Form1()
         {
             InitializeComponent();
@@ -70,32 +78,68 @@ namespace Consulta_DNI_RUC_V2
         public void rconsulta()
         {
             txb_rdnirz.Text = "";
-
-
-            try
+            if (System.IO.File.Exists(@"database.db"))
             {
+                using (var conexionSQLite = new SQLiteConnection(databaseFile))
+                {
+                    conexionSQLite.Open();
+                    consultaSqlite(conexionSQLite);
 
-                dynamic respuesta = epic.Get("https://api.apis.net.pe/v1/dni?numero=" + txb_dni.Text + "");
-                txb_rdnirz.Text = respuesta.nombre.ToString();
+                }
 
+                try
+                {
+                    dynamic respuesta = consulta.Get("https://api.apis.net.pe/v2/reniec/dni?numero=" + txb_dni.Text + "&token="+token+"");
+
+
+                    string aPaterno = respuesta.apellidoPaterno.ToString();
+                    string aMaterno = respuesta.apellidoMaterno.ToString();
+                    string nombres = respuesta.nombres.ToString();
+                    string datos = "" + aPaterno + "  " + aMaterno + " " + nombres + "";
+                    txb_rdnirz.Text = Regex.Replace(datos, @"\s{2,}", " ");
+
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                    txb_dni.Text = "";
+                    txb_dni.Focus();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-
+                MessageBox.Show("Registre un toquen en Help>token");
                 txb_dni.Text = "";
                 txb_dni.Focus();
+
             }
         }
 
+        private void consultaSqlite(SQLiteConnection conexionSQLite)
+        {
+
+            string consultaSQL = "SELECT token FROM api_token WHERE id = 1";
+            SQLiteCommand comandoSQL = new SQLiteCommand(consultaSQL, conexionSQLite);
+            string nombreAPIClave = (string)comandoSQL.ExecuteScalar();
+            token = nombreAPIClave;
+        }
         public void rucconsula()
         {
             txb_rdnirz.Text = "";
-            try
+            if (System.IO.File.Exists(@"database.db"))
+            {
+                using (var conexionSQLite = new SQLiteConnection(databaseFile))
+                {
+                    conexionSQLite.Open();
+                    consultaSqlite(conexionSQLite);
+
+                }
+                try
             {
 
-                dynamic respuesta = epic.Get("https://api.apis.net.pe/v1/ruc?numero=" + txb_ruc.Text + "");
-                txb_rdnirz.Text = respuesta.nombre.ToString();
+                dynamic respuesta = consulta.Get("https://api.apis.net.pe/v2/sunat/ruc?numero=" + txb_ruc.Text + "&token=" + token + "");
+                txb_rdnirz.Text = respuesta.razonSocial.ToString();
                 txb_nroruc.Text = respuesta.numeroDocumento.ToString();
                 txb_estado.Text = respuesta.estado.ToString();
                 txb_condicion.Text = respuesta.condicion.ToString();
@@ -117,7 +161,13 @@ namespace Consulta_DNI_RUC_V2
                 txb_ruc.Focus();
                 lcampos();
             }
-
+            }
+            else
+            {
+                MessageBox.Show("Registre un toquen en Help>token");
+                txb_dni.Text = "";
+                txb_dni.Focus();
+            }
 
         }
 
