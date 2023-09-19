@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace Consulta_DNI_RUC_V2
 {
@@ -78,16 +79,19 @@ namespace Consulta_DNI_RUC_V2
         private void TokenControl_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
+            linkLabel1.Links.Add(0, 0, "https://apis.net.pe");
+
             using (var conexionSQLite = new SQLiteConnection(databaseFile))
             {
                 create_db(conexionSQLite);
                 txb_token.Text = consulta;
             }
+
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://apis.net.pe/");
+            System.Diagnostics.Process.Start(e.Link.LinkData.ToString());
         }
 
         private void button1_Click(object sender, EventArgs e)

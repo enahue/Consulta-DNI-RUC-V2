@@ -47,7 +47,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(132, 13);
+            label1.Location = new Point(114, 18);
             label1.Name = "label1";
             label1.Size = new Size(110, 15);
             label1.TabIndex = 2;
@@ -56,7 +56,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(81, 41);
+            label2.Location = new Point(63, 40);
             label2.Name = "label2";
             label2.Size = new Size(38, 15);
             label2.TabIndex = 3;
@@ -65,7 +65,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(237, 13);
+            linkLabel1.Location = new Point(219, 18);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(64, 15);
             linkLabel1.TabIndex = 4;
@@ -78,11 +78,12 @@
             txb_token.BackColor = SystemColors.Control;
             txb_token.Cursor = Cursors.IBeam;
             txb_token.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            txb_token.Location = new Point(125, 38);
+            txb_token.Location = new Point(102, 38);
             txb_token.MaxLength = 11;
             txb_token.Name = "txb_token";
+            txb_token.PasswordChar = '+';
             txb_token.ReadOnly = true;
-            txb_token.Size = new Size(225, 20);
+            txb_token.Size = new Size(248, 20);
             txb_token.TabIndex = 14;
             // 
             // button1

@@ -2,8 +2,9 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Data.SQLite;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
-
+using Newtonsoft.Json;
 namespace Consulta_DNI_RUC_V2
 {
     public partial class Form1 : Form
@@ -89,8 +90,7 @@ namespace Consulta_DNI_RUC_V2
 
                 try
                 {
-                    dynamic respuesta = consulta.Get("https://api.apis.net.pe/v2/reniec/dni?numero=" + txb_dni.Text + "&token="+token+"");
-
+                    dynamic respuesta = consulta.Get("https://api.apis.net.pe/v2/reniec/dni?numero=" + txb_dni.Text + "&token=" + token + "");
 
                     string aPaterno = respuesta.apellidoPaterno.ToString();
                     string aMaterno = respuesta.apellidoMaterno.ToString();
@@ -101,7 +101,6 @@ namespace Consulta_DNI_RUC_V2
                 }
                 catch (Exception ex)
                 {
-
                     MessageBox.Show(ex.Message);
                     txb_dni.Text = "";
                     txb_dni.Focus();
