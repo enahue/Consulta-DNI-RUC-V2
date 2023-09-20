@@ -20,4 +20,4 @@ Registra tu token en Help >> Token
 
 ![image](https://github.com/enahue/Consulta-DNI-RUC-V2/assets/36392461/76d7f036-08e5-4263-9dc6-f614b0010c87)
 
-#### Descargar el [instalador](https://consulta-dniruc.surge.sh/) para Windows.
+#### Descargar el [instalador](https://consulta-datos-v2.orion.net.pe/) para Windows.
