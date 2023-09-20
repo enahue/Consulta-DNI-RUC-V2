@@ -1,7 +1,7 @@
 # Consulta de datos DNI y RUC - PERU V2
 Aplicativo para consultas de DNI y RUC para Windows.
 
-Esta aplicación es la segunda version usando:
+Esta aplicación es la segunda version de [Consulta-DNI-RUC](https://github.com/enahue/Consulta-DNI-RUC) usando:
 - C# y .NET y Windows Form para el codigo y diseño de interfaz.
 - RestSharp: Para consumir el Api Rest de [Peru-Apis](https://apis.net.pe/).
 - Sqlite: Para almacenamiento de Token.
