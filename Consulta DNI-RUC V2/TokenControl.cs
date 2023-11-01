@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Diagnostics;
 
+
 namespace Consulta_DNI_RUC_V2
 {
     public partial class TokenControl : Form
@@ -79,7 +80,7 @@ namespace Consulta_DNI_RUC_V2
         private void TokenControl_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
-            linkLabel1.Links.Add(0, 0, "https://apis.net.pe");
+            linkLabel1.Links.Add(0, 0, "https://apisperu.com/");
 
             using (var conexionSQLite = new SQLiteConnection(databaseFile))
             {
@@ -96,8 +97,11 @@ namespace Consulta_DNI_RUC_V2
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(MessageBox.Show("Registrar Token nuevo?", "Token", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Yes) { 
+
             using (var conexionSQLite = new SQLiteConnection(databaseFile))
             {
+                
                 conexionSQLite.Open();
                 string consultaSQL = "UPDATE api_token SET token = '" + txb_newtoken.Text + "' WHERE id = 1";
                 SQLiteCommand comandoSQL = new SQLiteCommand(consultaSQL, conexionSQLite);
@@ -106,6 +110,11 @@ namespace Consulta_DNI_RUC_V2
                 txb_newtoken.Text = "";
                 consultar_tabla(conexionSQLite);
                 txb_token.Text = consulta;
+            }
+            }
+            else
+            {
+                return;
             }
         }
     }

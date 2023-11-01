@@ -5,13 +5,15 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using System.Security.Policy;
+using System.Text;
 namespace Consulta_DNI_RUC_V2
 {
     public partial class Form1 : Form
     {
-        ConsultaApi consulta = new ConsultaApi();
         private string databaseFile = String.Format("Data Source={0}", @"database.db");
         string token = "";
+        string url = "https://dniruc.apisperu.com/api/v1/";
         public Form1()
         {
             InitializeComponent();
@@ -76,42 +78,66 @@ namespace Consulta_DNI_RUC_V2
 
         }
 
-        public void rconsulta()
+        public async void ConsultaDNI()
         {
-            txb_rdnirz.Text = "";
-            if (System.IO.File.Exists(@"database.db"))
+            try
             {
-                using (var conexionSQLite = new SQLiteConnection(databaseFile))
+
+                txb_rdnirz.Text = "";
+                if (System.IO.File.Exists(@"database.db"))
                 {
-                    conexionSQLite.Open();
-                    consultaSqlite(conexionSQLite);
+                    using (var conexionSQLite = new SQLiteConnection(databaseFile))
+                    {
+                        conexionSQLite.Open();
+                        consultaSqlite(conexionSQLite);
+
+                    }
+
+
+                    using (var client = new HttpClient())
+                    {
+
+                        HttpResponseMessage response = await client.GetAsync(url + "dni/" + txb_dni.Text + "?token=" + token + "");
+                        var responseJson = await response.Content.ReadAsStringAsync();
+                        var json = JsonConvert.DeserializeObject<dynamic>(responseJson);
+                        string messageFinal = json.success;
+                        if (Convert.ToBoolean(messageFinal.ToLower()))
+                        {
+                            string aPaterno = json.apellidoPaterno.ToString();
+                            string aMaterno = json.apellidoMaterno.ToString();
+                            string nombres = json.nombres.ToString();
+                            string datos = "" + aPaterno + "  " + aMaterno + " " + nombres + "";
+                            txb_rdnirz.Text = Regex.Replace(datos, @"\s{2,}", " ").TrimEnd(' ');
+                            txb_dni.Enabled = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show(json.message.ToString());
+                            txb_dni.Enabled = true;
+                            txb_dni.Text = "";
+                            txb_dni.Focus();
+                            return;
+                        }
+
+                    }
 
                 }
-
-                try
+                else
                 {
-                    dynamic respuesta = consulta.Get("https://api.apis.net.pe/v2/reniec/dni?numero=" + txb_dni.Text + "&token=" + token + "");
-
-                    string aPaterno = respuesta.apellidoPaterno.ToString();
-                    string aMaterno = respuesta.apellidoMaterno.ToString();
-                    string nombres = respuesta.nombres.ToString();
-                    string datos = "" + aPaterno + "  " + aMaterno + " " + nombres + "";
-                    txb_rdnirz.Text = Regex.Replace(datos, @"\s{2,}", " ");
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Registre un toquen en Help>token");
+                    txb_dni.Enabled = true;
                     txb_dni.Text = "";
                     txb_dni.Focus();
+
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Registre un toquen en Help>token");
+                MessageBox.Show(ex.Message);
+                txb_dni.Enabled = true;
                 txb_dni.Text = "";
                 txb_dni.Focus();
-
+                lcampos();
             }
         }
 
@@ -123,52 +149,75 @@ namespace Consulta_DNI_RUC_V2
             string nombreAPIClave = (string)comandoSQL.ExecuteScalar();
             token = nombreAPIClave;
         }
-        public void rucconsula()
+        public async void ConsultaRuc()
         {
-            txb_rdnirz.Text = "";
-            if (System.IO.File.Exists(@"database.db"))
+            try
             {
-                using (var conexionSQLite = new SQLiteConnection(databaseFile))
+                txb_rdnirz.Text = "";
+                if (System.IO.File.Exists(@"database.db"))
                 {
-                    conexionSQLite.Open();
-                    consultaSqlite(conexionSQLite);
+                    using (var conexionSQLite = new SQLiteConnection(databaseFile))
+                    {
+                        conexionSQLite.Open();
+                        consultaSqlite(conexionSQLite);
 
+                    }
+
+                    using (var client = new HttpClient())
+                    {
+
+                        HttpResponseMessage response = await client.GetAsync(url + "ruc/" + txb_ruc.Text + "?token=" + token + "");
+                        var responseJson = await response.Content.ReadAsStringAsync();
+                        var json = JsonConvert.DeserializeObject<dynamic>(responseJson);
+                        string messageFinal = json.success;
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+
+                            txb_ruc.Enabled = true;
+                            txb_rdnirz.Text = json.razonSocial.ToString();
+                            txb_nroruc.Text = json.ruc.ToString();
+                            txb_estado.Text = json.estado.ToString();
+                            txb_condicion.Text = json.condicion.ToString();
+                            txb_direccion.Text = json.direccion.ToString();
+                            txb_ubigeo.Text = json.ubigeo.ToString();
+                            txb_distrito.Text = json.distrito.ToString();
+                            txb_provincia.Text = json.provincia.ToString();
+                            txb_departamento.Text = json.departamento.ToString();
+
+                        }
+                        else if (response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            MessageBox.Show("No se encontró resultados");
+                            txb_ruc.Enabled = true;
+                            txb_ruc.Text = "";
+                            txb_ruc.Focus();
+                            return;
+                        }
+
+
+                    }
                 }
-                try
-            {
-
-                dynamic respuesta = consulta.Get("https://api.apis.net.pe/v2/sunat/ruc?numero=" + txb_ruc.Text + "&token=" + token + "");
-                txb_rdnirz.Text = respuesta.razonSocial.ToString();
-                txb_nroruc.Text = respuesta.numeroDocumento.ToString();
-                txb_estado.Text = respuesta.estado.ToString();
-                txb_condicion.Text = respuesta.condicion.ToString();
-                txb_direccion.Text = respuesta.direccion.ToString();
-                txb_ubigeo.Text = respuesta.ubigeo.ToString();
-                txb_distrito.Text = respuesta.distrito.ToString();
-                txb_provincia.Text = respuesta.provincia.ToString();
-                txb_departamento.Text = respuesta.departamento.ToString();
 
 
-
-
+                else
+                {
+                    MessageBox.Show("Registre un toquen en Help>token");
+                    txb_dni.Text = "";
+                    txb_ruc.Enabled = true;
+                    txb_dni.Focus();
+                }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-
-                txb_dni.Text = "";
+                txb_ruc.Enabled = true;
+                txb_ruc.Text = "";
                 txb_ruc.Focus();
                 lcampos();
             }
-            }
-            else
-            {
-                MessageBox.Show("Registre un toquen en Help>token");
-                txb_dni.Text = "";
-                txb_dni.Focus();
-            }
-
         }
+
+
 
         private void tokenToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -193,8 +242,10 @@ namespace Consulta_DNI_RUC_V2
         {
             if (this.txb_dni.Text.Length == 8)
             {
+
                 this.txb_rdnirz.Focus();
-                rconsulta();
+                txb_dni.Enabled = false;
+                ConsultaDNI();
             }
         }
 
@@ -204,7 +255,8 @@ namespace Consulta_DNI_RUC_V2
             if (this.txb_ruc.Text.Length == 11)
             {
                 this.txb_rdnirz.Focus();
-                rucconsula();
+                txb_ruc.Enabled = false;
+                ConsultaRuc();
             }
         }
     }

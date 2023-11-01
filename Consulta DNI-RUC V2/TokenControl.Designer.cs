@@ -67,10 +67,10 @@
             linkLabel1.AutoSize = true;
             linkLabel1.Location = new Point(219, 18);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(64, 15);
+            linkLabel1.Size = new Size(79, 15);
             linkLabel1.TabIndex = 4;
             linkLabel1.TabStop = true;
-            linkLabel1.Text = "apis.net.pe";
+            linkLabel1.Text = "apisperu.com";
             linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // txb_token
