@@ -97,7 +97,7 @@ namespace Consulta_DNI_RUC_V2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Registrar Token nuevo?", "Token", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Yes) { 
+            if(MessageBox.Show("Registrar Token nuevo?", "Token", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK) { 
 
             using (var conexionSQLite = new SQLiteConnection(databaseFile))
             {
