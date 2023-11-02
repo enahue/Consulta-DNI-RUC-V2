@@ -1,12 +1,8 @@
-using Newtonsoft.Json.Linq;
-using RestSharp;
 using System.Data.SQLite;
-using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using System.Security.Policy;
-using System.Text;
+
 namespace Consulta_DNI_RUC_V2
 {
     public partial class Form1 : Form
