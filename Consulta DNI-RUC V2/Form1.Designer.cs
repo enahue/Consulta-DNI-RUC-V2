@@ -54,6 +54,15 @@
             helpToolStripMenuItem = new ToolStripMenuItem();
             tokenToolStripMenuItem = new ToolStripMenuItem();
             txb_dni = new TextBox();
+            button1 = new Button();
+            btn_crz = new Button();
+            btn_estado = new Button();
+            btn_condicion = new Button();
+            btn_direccion = new Button();
+            btn_ubigeo = new Button();
+            btn_distrito = new Button();
+            btn_provincia = new Button();
+            btn_departamento = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -203,7 +212,7 @@
             txb_rdnirz.MaxLength = 11;
             txb_rdnirz.Name = "txb_rdnirz";
             txb_rdnirz.ReadOnly = true;
-            txb_rdnirz.Size = new Size(462, 20);
+            txb_rdnirz.Size = new Size(422, 20);
             txb_rdnirz.TabIndex = 13;
             // 
             // txb_nroruc
@@ -251,7 +260,7 @@
             txb_direccion.MaxLength = 11;
             txb_direccion.Name = "txb_direccion";
             txb_direccion.ReadOnly = true;
-            txb_direccion.Size = new Size(462, 20);
+            txb_direccion.Size = new Size(422, 20);
             txb_direccion.TabIndex = 17;
             // 
             // txb_distrito
@@ -337,12 +346,120 @@
             txb_dni.TabIndex = 1;
             txb_dni.TextChanged += txb_dni_TextChanged;
             // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            button1.Location = new Point(268, 117);
+            button1.Name = "button1";
+            button1.Size = new Size(40, 20);
+            button1.TabIndex = 22;
+            button1.Text = "Copiar";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // btn_crz
+            // 
+            btn_crz.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_crz.Location = new Point(556, 91);
+            btn_crz.Name = "btn_crz";
+            btn_crz.Size = new Size(40, 20);
+            btn_crz.TabIndex = 23;
+            btn_crz.Text = "Copiar";
+            btn_crz.UseVisualStyleBackColor = true;
+            btn_crz.Click += btn_crz_Click;
+            // 
+            // btn_estado
+            // 
+            btn_estado.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_estado.Location = new Point(234, 143);
+            btn_estado.Name = "btn_estado";
+            btn_estado.Size = new Size(40, 20);
+            btn_estado.TabIndex = 24;
+            btn_estado.Text = "Copiar";
+            btn_estado.UseVisualStyleBackColor = true;
+            btn_estado.Click += btn_estado_Click;
+            // 
+            // btn_condicion
+            // 
+            btn_condicion.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_condicion.Location = new Point(234, 169);
+            btn_condicion.Name = "btn_condicion";
+            btn_condicion.Size = new Size(40, 20);
+            btn_condicion.TabIndex = 25;
+            btn_condicion.Text = "Copiar";
+            btn_condicion.UseVisualStyleBackColor = true;
+            btn_condicion.Click += btn_condicion_Click;
+            // 
+            // btn_direccion
+            // 
+            btn_direccion.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_direccion.Location = new Point(556, 195);
+            btn_direccion.Name = "btn_direccion";
+            btn_direccion.Size = new Size(40, 20);
+            btn_direccion.TabIndex = 26;
+            btn_direccion.Text = "Copiar";
+            btn_direccion.UseVisualStyleBackColor = true;
+            btn_direccion.Click += btn_direccion_Click;
+            // 
+            // btn_ubigeo
+            // 
+            btn_ubigeo.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_ubigeo.Location = new Point(234, 221);
+            btn_ubigeo.Name = "btn_ubigeo";
+            btn_ubigeo.Size = new Size(40, 20);
+            btn_ubigeo.TabIndex = 27;
+            btn_ubigeo.Text = "Copiar";
+            btn_ubigeo.UseVisualStyleBackColor = true;
+            btn_ubigeo.Click += btn_ubigeo_Click;
+            // 
+            // btn_distrito
+            // 
+            btn_distrito.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_distrito.Location = new Point(340, 247);
+            btn_distrito.Name = "btn_distrito";
+            btn_distrito.Size = new Size(40, 20);
+            btn_distrito.TabIndex = 28;
+            btn_distrito.Text = "Copiar";
+            btn_distrito.UseVisualStyleBackColor = true;
+            btn_distrito.Click += btn_distrito_Click;
+            // 
+            // btn_provincia
+            // 
+            btn_provincia.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_provincia.Location = new Point(340, 273);
+            btn_provincia.Name = "btn_provincia";
+            btn_provincia.Size = new Size(40, 20);
+            btn_provincia.TabIndex = 29;
+            btn_provincia.Text = "Copiar";
+            btn_provincia.UseVisualStyleBackColor = true;
+            btn_provincia.Click += btn_provincia_Click;
+            // 
+            // btn_departamento
+            // 
+            btn_departamento.Font = new Font("Segoe UI", 6.75F, FontStyle.Italic, GraphicsUnit.Point);
+            btn_departamento.Location = new Point(340, 299);
+            btn_departamento.Name = "btn_departamento";
+            btn_departamento.Size = new Size(40, 20);
+            btn_departamento.TabIndex = 30;
+            btn_departamento.Text = "Copiar";
+            btn_departamento.UseVisualStyleBackColor = true;
+            btn_departamento.Click += btn_departamento_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(610, 378);
+            Controls.Add(btn_departamento);
+            Controls.Add(btn_provincia);
+            Controls.Add(btn_distrito);
+            Controls.Add(btn_ubigeo);
+            Controls.Add(btn_direccion);
+            Controls.Add(btn_condicion);
+            Controls.Add(btn_estado);
+            Controls.Add(btn_crz);
+            Controls.Add(button1);
             Controls.Add(txb_ruc);
             Controls.Add(txb_dni);
             Controls.Add(txb_ubigeo);
@@ -406,5 +523,14 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem tokenToolStripMenuItem;
         private TextBox txb_dni;
+        private Button button1;
+        private Button btn_crz;
+        private Button btn_estado;
+        private Button btn_condicion;
+        private Button btn_direccion;
+        private Button btn_ubigeo;
+        private Button btn_distrito;
+        private Button btn_provincia;
+        private Button btn_departamento;
     }
 }

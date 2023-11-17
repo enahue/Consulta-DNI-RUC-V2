@@ -38,6 +38,19 @@ namespace Consulta_DNI_RUC_V2
             txb_departamento.Text = "";
 
         }
+
+        public void lcamposSeacrh()
+        {
+            txb_rdnirz.Text = "";
+            txb_nroruc.Text = "";
+            txb_estado.Text = "";
+            txb_condicion.Text = "";
+            txb_direccion.Text = "";
+            txb_ubigeo.Text = "";
+            txb_distrito.Text = "";
+            txb_provincia.Text = "";
+            txb_departamento.Text = "";
+        }
         public void csize()
         {
 
@@ -247,6 +260,8 @@ namespace Consulta_DNI_RUC_V2
 
                 this.txb_rdnirz.Focus();
                 txb_dni.Enabled = false;
+                //txb_nroruc.Text = "";
+                lcamposSeacrh();
                 ConsultaDNI();
             }
         }
@@ -258,8 +273,62 @@ namespace Consulta_DNI_RUC_V2
             {
                 this.txb_rdnirz.Focus();
                 txb_ruc.Enabled = false;
+                lcamposSeacrh();
                 ConsultaRuc();
             }
+        }
+
+        private void btnCopiar(string texto)
+        {
+            //Crear un objeto de datos con el texto
+            DataObject data = new DataObject(texto);
+            //Copiar el objeto de datos al portapapeles
+            Clipboard.SetDataObject(data);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_nroruc.Text);
+        }
+
+        private void btn_crz_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_rdnirz.Text);
+        }
+
+        private void btn_estado_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_estado.Text);
+        }
+
+        private void btn_condicion_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_condicion.Text);
+        }
+
+        private void btn_direccion_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_direccion.Text);
+        }
+
+        private void btn_ubigeo_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_ubigeo.Text);
+        }
+
+        private void btn_distrito_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_distrito.Text);
+        }
+
+        private void btn_provincia_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_provincia.Text);
+        }
+
+        private void btn_departamento_Click(object sender, EventArgs e)
+        {
+            btnCopiar(txb_departamento.Text);
         }
     }
 }
