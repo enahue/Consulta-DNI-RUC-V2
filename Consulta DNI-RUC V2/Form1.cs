@@ -43,8 +43,8 @@ namespace Consulta_DNI_RUC_V2
 
             if (comboBox1.Text == "DNI")
             {
-
-                Size = new Size(625, 156);
+                txb_dni.MaxLength = 8;
+                Size = new Size(625, 180);
                 lbl_numdoc.Text = "DNI";
                 txb_dni.Text = "";
                 txb_rdnirz.Text = "";
@@ -60,6 +60,7 @@ namespace Consulta_DNI_RUC_V2
 
             if (comboBox1.Text == "RUC")
             {
+                txb_ruc.MaxLength = 11;
                 Size = new Size(625, 376);
                 lbl_numdoc.Text = "RUC";
                 txb_dni.Text = "";
@@ -104,7 +105,10 @@ namespace Consulta_DNI_RUC_V2
                             string nombres = json.nombres.ToString();
                             string datos = "" + aPaterno + "  " + aMaterno + " " + nombres + "";
                             txb_rdnirz.Text = Regex.Replace(datos, @"\s{2,}", " ").TrimEnd(' ');
+                            txb_nroruc.Text = json.dni.ToString();
                             txb_dni.Enabled = true;
+                            txb_dni.Clear();
+                            txb_dni.Focus();
                         }
                         else
                         {
@@ -179,6 +183,8 @@ namespace Consulta_DNI_RUC_V2
                             txb_distrito.Text = json.distrito.ToString();
                             txb_provincia.Text = json.provincia.ToString();
                             txb_departamento.Text = json.departamento.ToString();
+                            txb_ruc.Clear();
+                            txb_ruc.Focus();
 
                         }
                         else if (response.StatusCode == HttpStatusCode.NotFound)
